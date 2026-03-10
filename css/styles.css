@@ -1,1 +1,53 @@
+/* css/styles.css: Отдельный файл со стилями. Вынесены все CSS из <style> тега. */
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600&family=Inter:wght@400;500&display=swap');
 
+:root {
+    --primary: #3b82f6;
+}
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+}
+.title-font {
+    font-family: 'Comfortaa', cursive;
+}
+.letter-btn {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.letter-btn:hover {
+    transform: scale(1.15) rotate(3deg);
+    box-shadow: 0 10px 15px -3px rgb(59 130 246 / 0.3);
+}
+.answer-slot {
+    min-width: 48px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 700;
+    border: 3px dashed #64748b;
+    transition: all 0.3s ease;
+}
+.screen {
+    animation: fadeIn 0.4s ease forwards;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.task-card {
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+.task-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+}
+.progress-bar {
+    transition: width 1s ease;
+}
+.option-btn {
+    transition: all 0.2s ease;
+}
+.option-btn:hover:not(:disabled) {
+    transform: translateX(8px);
+}

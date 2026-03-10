@@ -1,0 +1,214 @@
+<!-- index.html: Основной HTML-файл с структурой интерфейса. Стили и скрипты подключаются отдельно. -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Russian corner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950 text-slate-200 min-h-screen">
+    <div class="max-w-2xl mx-auto">
+        <!-- HEADER -->
+        <header class="bg-slate-900 border-b border-blue-500/30 sticky top-0 z-50">
+            <div class="px-6 py-4 flex items-center justify-between">
+                <div onclick="goHome()" class="flex items-center gap-3 cursor-pointer">
+                    <div class="w-10 h-10 bg-blue-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">📖</div>
+                    <div>
+                        <span class="title-font text-2xl font-bold tracking-tight text-white">Russian</span>
+                        <span class="title-font text-2xl font-bold tracking-tight text-blue-400">corner</span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-2">
+                    <button onclick="showScreen('results-screen')" 
+                            class="flex items-center gap-2 px-5 py-2 bg-slate-800 hover:bg-slate-700 rounded-2xl text-sm font-medium transition-colors">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Результаты</span>
+                    </button>
+                    <!-- Новый значок в меню: Добавил кнопку с иконкой для настроек (настройки интерфейса). Клик по ней вызывает showSettings() из config.js -->
+                    <button onclick="showSettings()" 
+                            class="w-10 h-10 flex items-center justify-center bg-slate-800 hover:bg-slate-700 rounded-2xl text-xl transition-colors">
+                        <i class="fas fa-cog"></i> <!-- Иконка настроек -->
+                    </button>
+                    <button onclick="goHome()" 
+                            class="w-10 h-10 flex items-center justify-center bg-slate-800 hover:bg-slate-700 rounded-2xl text-xl transition-colors">
+                        <i class="fas fa-home"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <div id="screens">
+            
+            <!-- HOME SCREEN -->
+            <div id="home-screen" class="screen p-6">
+                <div class="mb-8">
+                    <h1 class="text-4xl font-bold title-font text-white mb-2">Привет! 👋</h1>
+                    <p class="text-slate-400 text-lg">Выбери урок и начнём тренировку</p>
+                </div>
+
+                <div id="lessons-list" class="space-y-6">
+                    <!-- JS заполнит -->
+                </div>
+            </div>
+
+            <!-- LESSON SCREEN -->
+            <div id="lesson-screen" class="screen hidden p-6">
+                <div onclick="goHome()" class="flex items-center gap-2 text-blue-400 mb-6 cursor-pointer hover:text-blue-300">
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="font-medium">Назад к урокам</span>
+                </div>
+                
+                <div class="flex justify-between items-end mb-6">
+                    <div>
+                        <div id="lesson-title" class="title-font text-3xl font-bold text-white"></div>
+                        <div id="lesson-subtitle" class="text-slate-400"></div>
+                    </div>
+                    <div onclick="showAllResults()" 
+                         class="px-6 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-2xl text-sm font-medium cursor-pointer transition-colors flex items-center gap-2">
+                        <i class="fas fa-trophy"></i>
+                        <span>Результаты урока</span>
+                    </div>
+                </div>
+
+                <div id="tasks-list" class="space-y-4">
+                    <!-- JS заполнит -->
+                </div>
+            </div>
+
+            <!-- TASK SCREEN -->
+            <div id="task-screen" class="screen hidden p-6">
+                <div onclick="backToLesson()" class="flex items-center gap-2 text-blue-400 mb-6 cursor-pointer hover:text-blue-300">
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="font-medium">Назад к заданиям</span>
+                </div>
+
+                <div id="task-header" class="mb-8">
+                    <div class="flex items-center justify-between">
+                        <div id="task-number" class="px-4 py-1 bg-blue-500/10 text-blue-400 text-sm font-bold rounded-2xl"></div>
+                        <div id="task-type-badge" class="px-5 py-1 text-xs font-medium uppercase tracking-widest rounded-2xl"></div>
+                    </div>
+                    <h2 id="task-title" class="title-font text-3xl font-bold text-white mt-4"></h2>
+                    <p id="task-question" class="text-xl text-slate-300 mt-3 leading-tight"></p>
+                    
+                    <!-- БЛОК ДЛЯ КАРТИНКИ (новая возможность) -->
+                    <div id="task-image-container" class="hidden mt-6 flex justify-center">
+                        <img id="task-image" class="max-h-64 rounded-3xl shadow-2xl border border-slate-700" alt="Подсказка">
+                    </div>
+                </div>
+
+                <!-- SCRAMBLE TEMPLATE -->
+                <div id="scramble-template" class="hidden">
+                    <div class="mb-8">
+                        <div class="text-slate-400 text-sm mb-3 flex items-center gap-2">
+                            <i class="fas fa-random"></i>
+                            <span>Собери слово по буквам</span>
+                        </div>
+                        <div id="shuffled-letters" class="grid grid-cols-6 gap-3 mb-10">
+                            <!-- JS letters -->
+                        </div>
+                        
+                        <div class="text-center mb-4">
+                            <div class="inline-flex items-center gap-2 text-slate-400 text-sm">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>Твоё слово</span>
+                            </div>
+                        </div>
+                        
+                        <div id="answer-area" class="flex gap-3 justify-center flex-wrap min-h-[72px] bg-slate-900/70 border-2 border-dashed border-slate-700 rounded-3xl p-6">
+                            <!-- JS answer slots -->
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button onclick="removeLastLetter()" 
+                                class="flex-1 py-5 bg-slate-800 hover:bg-slate-700 rounded-3xl font-medium flex items-center justify-center gap-3 transition-colors">
+                            <i class="fas fa-undo"></i>
+                            <span>Удалить букву</span>
+                        </button>
+                        <button onclick="checkScrambleAnswer()" 
+                                class="flex-1 py-5 bg-emerald-500 hover:bg-emerald-600 rounded-3xl font-bold text-white text-lg transition-all active:scale-95">
+                            ПРОВЕРИТЬ ✓
+                        </button>
+                    </div>
+                </div>
+
+                <!-- MULTIPLE CHOICE TEMPLATE -->
+                <div id="multiple-template" class="hidden">
+                    <div id="multiple-options" class="space-y-4">
+                        <!-- JS options -->
+                    </div>
+                    
+                    <button onclick="checkMultipleAnswer()" 
+                            class="mt-10 w-full py-6 bg-emerald-500 hover:bg-emerald-600 rounded-3xl font-bold text-white text-xl transition-all active:scale-95">
+                        ПРОВЕРИТЬ ОТВЕТ
+                    </button>
+                </div>
+
+                <!-- FEEDBACK -->
+                <div id="feedback" class="hidden mt-8 p-6 rounded-3xl text-center">
+                    <!-- JS заполнит -->
+                </div>
+            </div>
+
+            <!-- RESULTS SCREEN -->
+            <div id="results-screen" class="screen hidden p-6">
+                <div class="flex items-center justify-between mb-8">
+                    <h1 class="title-font text-4xl font-bold text-white">Твои результаты</h1>
+                    <button onclick="goHome()" 
+                            class="px-6 py-3 bg-slate-800 rounded-2xl text-sm flex items-center gap-2 hover:bg-slate-700">
+                        <i class="fas fa-home"></i>
+                        Главная
+                    </button>
+                </div>
+
+                <div id="overall-stats" class="bg-slate-900 rounded-3xl p-6 mb-8">
+                    <!-- JS заполнит -->
+                </div>
+
+                <div class="text-lg font-medium mb-4 text-slate-400 flex items-center gap-2">
+                    <i class="fas fa-list-check"></i>
+                    <span>Все задания</span>
+                </div>
+                
+                <div id="all-results-list" class="space-y-3">
+                    <!-- JS заполнит -->
+                </div>
+            </div>
+
+            <!-- SETTINGS SCREEN: Новый экран для настроек интерфейса (добавлен для демонстрации). Можно кастомизировать цвета, темы и т.д. -->
+            <div id="settings-screen" class="screen hidden p-6">
+                <div onclick="goHome()" class="flex items-center gap-2 text-blue-400 mb-6 cursor-pointer hover:text-blue-300">
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="font-medium">Назад</span>
+                </div>
+                <h1 class="title-font text-4xl font-bold text-white mb-8">Настройки</h1>
+                <div class="space-y-6">
+                    <!-- Здесь можно добавить опции, например, смена темы -->
+                    <button onclick="changeTheme('dark')" class="w-full py-4 bg-slate-800 rounded-2xl">Тёмная тема</button>
+                    <button onclick="changeTheme('light')" class="w-full py-4 bg-slate-800 rounded-2xl">Светлая тема</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-800 border border-emerald-400 text-emerald-400 px-8 py-4 rounded-3xl shadow-2xl flex items-center gap-3 z-[100]">
+        <i class="fas fa-check-circle text-2xl"></i>
+        <span id="toast-text" class="font-medium"></span>
+    </div>
+
+    <!-- Подключение скриптов: Разделены на файлы -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/render.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/results.js"></script>
+    <script src="js/init.js"></script>
+</body>
+</html>

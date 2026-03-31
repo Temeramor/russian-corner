@@ -16,14 +16,14 @@ let lessons = [
         subtitle: "Основные слова и фразы",
         tasks: [
             {
-                id: 1,
+                id: 1.1,
                 type: "scramble",
                 title: "Собери слово",
                 question: "Как сказать «привет» на русском?",
                 data: { word: "ПРИВЕТ" }
             },
             {
-                id: 2,
+                id: 1.2,
                 type: "multiple",
                 title: "Выбери правильный перевод",
                 question: "Что значит слово «спасибо»?",
@@ -34,7 +34,7 @@ let lessons = [
                 }
             },
             {
-                id: 3,
+                id: 1.3,
                 type: "scramble",
                 title: "Собери слово",
                 question: "Как сказать «пока»?",
@@ -48,7 +48,7 @@ let lessons = [
         subtitle: "Учимся заказывать в кафе",
         tasks: [
             {
-                id: 1,
+                id: 2.1,
                 type: "multiple",
                 title: "Выбери правильный перевод",
                 question: "Как будет «яблоко» на русском?",
@@ -58,7 +58,7 @@ let lessons = [
                 }
             },
             {
-                id: 2,
+                id: 2.2,
                 type: "scramble",
                 title: "Собери слово",
                 question: "Как называется этот напиток?",

@@ -36,3 +36,40 @@ function loadProgress() {
 function getTaskKey(lessonId, taskId) {
     return `lesson-${lessonId}-task-${taskId}`;
 }
+
+// Удалить прогресс только для одного урока
+function resetLessonProgress(lessonId) {
+    const progress = loadProgress();
+    const newProgress = {};
+
+    Object.keys(progress).forEach(key => {
+        // Если ключ начинается с "1." или "lessonId." (в зависимости от твоего формата id)
+        if (!key.startsWith(lessonId + '.')) {
+            newProgress[key] = progress[key];
+        }
+    });
+
+    saveProgress(newProgress);
+    console.log(`Прогресс урока ${lessonId} сброшен`);
+}
+
+// Проверить, есть ли ошибки в уроке (не все задачи правильные)
+function hasMistakesInLesson(lessonId) {
+    const lesson = lessons.find(l => l.id === lessonId);
+    if (!lesson) return false;
+
+    const progress = loadProgress();
+    let hasAnyMistake = false;
+
+    for (const task of lesson.tasks) {
+        const key = `${lessonId}.${task.id}`;   // или getTaskKey(lessonId, task.id)
+        const result = progress[key];
+
+        if (!result || result.isCorrect === false) {
+            hasAnyMistake = true;
+            // Можно продолжить проверку всех, если хочешь собирать статистику
+        }
+    }
+
+    return hasAnyMistake;
+}

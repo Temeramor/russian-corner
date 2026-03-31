@@ -34,5 +34,5 @@ function loadProgress() {
 }
 
 function getTaskKey(lessonId, taskId) {
-    return `(\( {lessonId}- \){taskId})`;
+    return `${lessonId}-${taskId}`;
 }
